@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:agora_rtm/src/web/agora_rtm_web_plugin.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/services.dart';
 
 import 'agora_rtm_channel.dart';
@@ -27,8 +29,14 @@ class AgoraRtmClient {
   ///
   /// The Agora RTM SDK supports multiple [AgoraRtmClient] instances.
   static Future<AgoraRtmClient> createInstance(String appId) async {
-    final res = await AgoraRtmPlugin.callMethodForStatic(
-        "createInstance", {'appId': appId});
+    late final res;
+    if (kIsWeb) {
+      res = await AgoraRtmWebPlugin.callMethodForStatic(
+          "createInstance", {'appId': appId});
+    } else {
+      res = await AgoraRtmPlugin.callMethodForStatic(
+          "createInstance", {'appId': appId});
+    }
     if (res["errorCode"] != 0)
       throw AgoraRtmClientException(
           "Create client failed errorCode:${res['errorCode']}",
@@ -41,7 +49,14 @@ class AgoraRtmClient {
 
   /// get the agora native sdk version
   static Future<String> getSdkVersion() async {
-    final res = await AgoraRtmPlugin.callMethodForStatic("getSdkVersion", null);
+    late final res;
+    if (kIsWeb) {
+      res = await AgoraRtmWebPlugin.callMethodForStatic(
+          "getSdkVersion", null);
+    } else {
+      res = await AgoraRtmPlugin.callMethodForStatic(
+          "getSdkVersion", null);
+    }
     if (res["errorCode"] != 0)
       throw AgoraRtmClientException(
           "getSdkVersion failed errorCode:${res['errorCode']}",
@@ -108,6 +123,12 @@ class AgoraRtmClient {
 
   _eventListener(dynamic event) {
     final Map<dynamic, dynamic> map = event;
+
+    /// clientIndex is used in the Web implementation instead of creating new EventChannel for each RTM client
+    if (kIsWeb && _clientIndex != map['clientIndex']) {
+      return;
+    }
+
     switch (map['event']) {
       case 'onConnectionStateChanged':
         int state = map['state'];
@@ -177,12 +198,21 @@ class AgoraRtmClient {
 
   AgoraRtmClient._(this._clientIndex) {
     _closed = false;
-    _clientSubscription = _addEventChannel('io.agora.rtm.client$_clientIndex')
-        .receiveBroadcastStream()
-        .listen(_eventListener, onError: onError);
+    if (kIsWeb) {
+      _clientSubscription = AgoraRtmWebPlugin.agoraRtmEventStream
+          .listen(_eventListener, onError: onError);
+    } else {
+      _clientSubscription = _addEventChannel('io.agora.rtm.client$_clientIndex')
+          .receiveBroadcastStream()
+          .listen(_eventListener, onError: onError);
+    }
   }
 
   Future<dynamic> _callNative(String methodName, dynamic arguments) {
+    if (kIsWeb) {
+      return AgoraRtmWebPlugin.callMethodForClient(
+          methodName, {'clientIndex': _clientIndex, 'args': arguments});
+    }
     return AgoraRtmPlugin.callMethodForClient(
         methodName, {'clientIndex': _clientIndex, 'args': arguments});
   }
