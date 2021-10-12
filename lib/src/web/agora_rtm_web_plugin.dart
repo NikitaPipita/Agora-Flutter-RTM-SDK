@@ -15,11 +15,11 @@ external set _agoraRtmOnEvent(void Function(dynamic event) f);
 external dynamic agoraRtmInvokeMethod(
     String method, String call, String? params);
 
-mixin AgoraRtmWebPlugin {
+mixin AgoraRtmPlugin {
   static final StreamController<Map<String, dynamic>>
       _agoraRtmEventStreamController = StreamController.broadcast();
 
-  static Stream<Map<String, dynamic>> get agoraRtmEventStream =>
+  static Stream<Map<String, dynamic>> agoraRtmEventStream(int clientIndex) =>
       _agoraRtmEventStreamController.stream;
 
   static void registerWith(Registrar registrar) {

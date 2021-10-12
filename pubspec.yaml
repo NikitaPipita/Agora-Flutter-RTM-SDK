@@ -24,5 +24,5 @@ flutter:
       ios:
         pluginClass: AgoraRtmPlugin
       web:
-        pluginClass: AgoraRtmWebPlugin
+        pluginClass: AgoraRtmPlugin
         fileName: src/web/agora_rtm_web_plugin.dart
