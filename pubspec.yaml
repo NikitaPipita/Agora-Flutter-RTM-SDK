@@ -25,4 +25,4 @@ flutter:
         pluginClass: AgoraRtmPlugin
       web:
         pluginClass: AgoraRtmPlugin
-        fileName: src/web/agora_rtm_web_plugin.dart
+        fileName: src/web/agora_rtm_plugin.dart
