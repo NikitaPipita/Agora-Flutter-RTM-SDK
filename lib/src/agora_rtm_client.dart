@@ -3,7 +3,6 @@ import 'dart:async';
 import 'agora_rtm_plugin.dart'
     if (dart.library.html) 'web/agora_rtm_web_plugin.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:flutter/services.dart';
 
 import 'agora_rtm_channel.dart';
 import 'utils.dart';
@@ -103,10 +102,6 @@ class AgoraRtmClient {
 
   final int _clientIndex;
   StreamSubscription<dynamic>? _clientSubscription;
-
-  EventChannel _addEventChannel(name) {
-    return new EventChannel(name);
-  }
 
   _eventListener(dynamic event) {
     final Map<dynamic, dynamic> map = event;
