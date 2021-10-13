@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'agora_rtm_plugin.dart'
-    if (dart.library.html) 'web/agora_rtm_web_plugin.dart';
+    if (dart.library.html) 'web/agora_rtm_plugin.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
 import 'agora_rtm_channel.dart';
