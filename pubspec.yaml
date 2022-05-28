@@ -9,6 +9,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_web_plugins:
+    sdk: flutter
+  js: 0.6.4
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -20,4 +23,6 @@ flutter:
         pluginClass: AgoraRtmPlugin
       ios:
         pluginClass: AgoraRtmPlugin
-
+      web:
+        pluginClass: AgoraRtmPluginWeb
+        fileName: src/web/agora_rtm_plugin_web.dart
