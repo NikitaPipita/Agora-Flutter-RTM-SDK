@@ -120,7 +120,7 @@ class _MyAppState extends State<MyApp> {
               child: new TextField(
                   controller: _userNameController,
                   decoration: InputDecoration(hintText: 'Input your user id'))),
-      new OutlineButton(
+      new OutlinedButton(
         child: Text(_isLogin ? 'Logout' : 'Login', style: textStyle),
         onPressed: _toggleLogin,
       )
@@ -136,7 +136,7 @@ class _MyAppState extends State<MyApp> {
           child: new TextField(
               controller: _peerUserIdController,
               decoration: InputDecoration(hintText: 'Input peer user id'))),
-      new OutlineButton(
+      new OutlinedButton(
         child: Text('Query Online', style: textStyle),
         onPressed: _toggleQuery,
       )
@@ -152,7 +152,7 @@ class _MyAppState extends State<MyApp> {
           child: new TextField(
               controller: _peerMessageController,
               decoration: InputDecoration(hintText: 'Input peer message'))),
-      new OutlineButton(
+      new OutlinedButton(
         child: Text('Send to Peer', style: textStyle),
         onPressed: _toggleSendPeerMessage,
       )
@@ -169,7 +169,7 @@ class _MyAppState extends State<MyApp> {
               controller: _invitationController,
               decoration:
                   InputDecoration(hintText: 'Input invitation content'))),
-      new OutlineButton(
+      new OutlinedButton(
         child: Text('Send local invitation', style: textStyle),
         onPressed: _toggleSendLocalInvitation,
       )
@@ -189,7 +189,7 @@ class _MyAppState extends State<MyApp> {
               child: new TextField(
                   controller: _channelNameController,
                   decoration: InputDecoration(hintText: 'Input channel id'))),
-      new OutlineButton(
+      new OutlinedButton(
         child: Text(_isInChannel ? 'Leave Channel' : 'Join Channel',
             style: textStyle),
         onPressed: _toggleJoinChannel,
@@ -206,7 +206,7 @@ class _MyAppState extends State<MyApp> {
           child: new TextField(
               controller: _channelMessageController,
               decoration: InputDecoration(hintText: 'Input channel message'))),
-      new OutlineButton(
+      new OutlinedButton(
         child: Text('Send to Channel', style: textStyle),
         onPressed: _toggleSendChannelMessage,
       )
@@ -218,7 +218,7 @@ class _MyAppState extends State<MyApp> {
       return Container();
     }
     return Row(children: <Widget>[
-      new OutlineButton(
+      new OutlinedButton(
         child: Text('Get Members in Channel', style: textStyle),
         onPressed: _toggleGetMembers,
       )
